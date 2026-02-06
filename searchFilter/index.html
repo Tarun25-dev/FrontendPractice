@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SearchBox</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        input {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            border: 2px solid #333;
+            border-radius: 10px;
+            box-sizing: border-box;
+        }
+        .item {
+            background: white;
+            margin: 10px 0;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #4CAF50;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .hidden {
+            display: none !important;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>🍎 Search Fruits</h1>
+    <input type="text" id="searchBox" placeholder="Type apple, banana, orange,...">
+    <div id="fruitsList">
+        <div class="item">🍎 Apple - Red fruit, good for health</div>
+        <div class="item">🍌 Banana - Yellow curved fruit</div>
+        <div class="item">🍊 Orange - Citrus fruit, vitamin C</div>
+        <div class="item">🍇 Grapes - Small sweet fruits</div>
+        <div class="item">🍓 Strawberry - Red small fruit</div>
+        <div class="item">🍍 Pineapple - Tropical spiky fruit</div>
+
+
+    </div>
+    <script>
+        let searchBox = document.getElementById("searchBox");
+        let fruitsList = document.getElementById("fruitsList");
+        let fruitItems = document.querySelectorAll(".item");
+
+
+        searchBox.addEventListener("input",function(){
+            let searchWord = searchBox.value.toLowerCase();
+       
+
+            fruitItems.forEach(function(fruit){
+                let fruitText = fruit.textContent.toLowerCase(); 
+
+                if (fruitText.includes(searchWord)){
+                    fruit.classList.remove("hidden");
+                }
+                else{
+                    fruit.classList.add("hidden");
+                }
+            });
+        });
+
+
+/*
+1. Page Loads
+text
+HTML creates 6 fruit boxes + 1 search input
+JavaScript finds them: searchBox, fruitItems[6]
+Everything visible initially
+2. User Types First Letter
+text
+Type "a" → searchBox.value = "a"
+addEventListener('input') triggers instantly
+3. Get Search Word
+javascript
+let searchWord = searchBox.value.toLowerCase();
+searchWord = "a"  // All lowercase for easy matching
+4. Loop Through ALL Fruits (forEach)
+text
+forEach visits each fruit 1 by 1:
+🍎 Apple → Check it
+🍌 Banana → Check it  
+🍊 Orange → Check it
+... (6 times total)
+5. Get Fruit Text
+javascript
+let fruitText = fruit.textContent.toLowerCase();
+🍎 Apple → fruitText = "apple - red fruit, good for health"
+6. MAGIC MATCH Check
+javascript
+if (fruitText.includes(searchWord))
+"apple - red fruit".includes("a") → TRUE ✅
+"banana - yellow".includes("a") → TRUE ✅  
+"orange - citrus".includes("a") → TRUE ✅
+7. SHOW Matching Fruit
+javascript
+fruit.classList.remove("hidden");
+✅ Matching fruit → Remove invisible class → VISIBLE!
+8. HIDE Non-Matching Fruit
+javascript
+fruit.classList.add("hidden");
+❌ No match → Add invisible class → INVISIBLE!
+9. Repeat for All 6 Fruits
+text
+6 fruits checked → 3 shown + 3 hidden
+Page updates instantly (no page reload!)
+10. User Types Next Letter
+text
+Type "ap" → Repeat steps 3-9 instantly
+Now only 🍎 Apple shows (has "ap")
+Others hidden (no "ap")
+*/
+    </script>
+</body>
+</html>
